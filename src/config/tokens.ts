@@ -1,5 +1,5 @@
 import { bsc, mainnet } from 'viem/chains';
-import { DINO_TOKEN_ADDRESS } from './constants';
+import { DINO_TOKEN_ADDRESS, UUSD_TOKEN_ADDRESS } from './constants';
 
 export type Token = {
   symbol: string;
@@ -24,9 +24,16 @@ export const DINO_TOKEN: Token = {
   decimals: 18,
 };
 
-const BSC_TOKENS: Token[] = [
-  BNB_TOKEN,
-  DINO_TOKEN,
+export const UUSD_TOKEN: Token = {
+  symbol: 'UUSD',
+  name: 'UUSD',
+  address: UUSD_TOKEN_ADDRESS,
+  decimals: 18,
+};
+
+/** BSC mainstream stablecoins (payment tokens). */
+const BSC_STABLECOINS: Token[] = [
+  UUSD_TOKEN,
   {
     symbol: 'USDT',
     name: 'Tether USD',
@@ -39,6 +46,42 @@ const BSC_TOKENS: Token[] = [
     address: '0x8AC76a51cc950d98F2EB160F68cF869c58c122C0',
     decimals: 18,
   },
+  {
+    symbol: 'BUSD',
+    name: 'Binance USD',
+    address: '0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
+    decimals: 18,
+  },
+  {
+    symbol: 'DAI',
+    name: 'Dai Stablecoin',
+    address: '0x1AF3F329e8BE154074D8766D1E4Aa11d962D033',
+    decimals: 18,
+  },
+  {
+    symbol: 'FDUSD',
+    name: 'First Digital USD',
+    address: '0xc5f0f6b3577Ba5E9163dC6a6ce66a7e7056E654',
+    decimals: 18,
+  },
+  {
+    symbol: 'TUSD',
+    name: 'TrueUSD',
+    address: '0x14016E85a25aeb13065688cAF951430dD32628Cb',
+    decimals: 18,
+  },
+  {
+    symbol: 'USD1',
+    name: 'World Liberty USD',
+    address: '0x8d0D000Ee44948FC98c9B98a4FA4921476F08B0d',
+    decimals: 18,
+  },
+];
+
+const BSC_TOKENS: Token[] = [
+  BNB_TOKEN,
+  ...BSC_STABLECOINS,
+  DINO_TOKEN,
   {
     symbol: 'CAKE',
     name: 'PancakeSwap',

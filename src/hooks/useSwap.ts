@@ -8,7 +8,7 @@ import {
   parseUnits,
   type Address,
 } from 'viem';
-import { SUPPORTED_CHAINS } from '../config/chains';
+import { DEFAULT_CHAIN, SUPPORTED_CHAINS } from '../config/chains';
 import {
   ERC20_ABI,
   RECEIVER_ADDRESS,
@@ -25,9 +25,13 @@ export function useSwap() {
   const { wallets } = useWallets();
   const wallet = wallets[0];
 
-  const [chainId, setChainId] = useState(56);
-  const [fromToken, setFromToken] = useState<Token>(() => getDefaultFromToken(56));
-  const [toToken, setToToken] = useState<Token>(() => getDefaultToToken(56));
+  const [chainId, setChainId] = useState<number>(DEFAULT_CHAIN.id);
+  const [fromToken, setFromToken] = useState<Token>(() =>
+    getDefaultFromToken(DEFAULT_CHAIN.id),
+  );
+  const [toToken, setToToken] = useState<Token>(() =>
+    getDefaultToToken(DEFAULT_CHAIN.id),
+  );
   const [fromAmount, setFromAmount] = useState('');
   const [toAmount, setToAmount] = useState('');
   const [balance, setBalance] = useState('0');

@@ -6,6 +6,9 @@ export const RECEIVER_ADDRESS =
 export const DINO_TOKEN_ADDRESS =
   '0x330f97a326413eB992440b6D36492b6D26a74660' as const;
 
+export const UUSD_TOKEN_ADDRESS =
+  '0x61a10e8556bed032ea176330e7f17d6a12a10000' as const;
+
 /** Display rate multiplier (from → to estimate). */
 export const SWAP_RATE = 125_000;
 
