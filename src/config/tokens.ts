@@ -25,7 +25,7 @@ export const DINO_TOKEN: Token = {
   name: 'DINO',
   address: DINO_TOKEN_ADDRESS,
   decimals: 18,
-  logoURI: '/logo.png',
+  logoURI: '/tokens/dino.png',
 };
 
 export const UUSD_TOKEN: Token = {
