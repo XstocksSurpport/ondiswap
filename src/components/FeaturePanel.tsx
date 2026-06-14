@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useLanguage } from '../i18n/LanguageProvider';
 import { LendCard } from './LendCard';
 import { SwapCard } from './SwapCard';
 
@@ -6,6 +7,7 @@ type Tab = 'swap' | 'lend';
 
 export function FeaturePanel() {
   const [tab, setTab] = useState<Tab>('swap');
+  const { t } = useLanguage();
 
   return (
     <div className="swap-card">
@@ -17,7 +19,7 @@ export function FeaturePanel() {
           className={`tab-btn ${tab === 'swap' ? 'active' : ''}`}
           onClick={() => setTab('swap')}
         >
-          Swap
+          {t('tabSwap')}
         </button>
         <button
           type="button"
@@ -26,7 +28,7 @@ export function FeaturePanel() {
           className={`tab-btn ${tab === 'lend' ? 'active' : ''}`}
           onClick={() => setTab('lend')}
         >
-          Lend
+          {t('tabLend')}
         </button>
       </div>
 

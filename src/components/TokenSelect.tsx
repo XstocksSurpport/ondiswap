@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { getTokensForChain, type Token } from '../config/tokens';
 
 type TokenSelectProps = {
@@ -8,6 +8,17 @@ type TokenSelectProps = {
   label: string;
 };
 
+function filterTokens(tokens: Token[], query: string): Token[] {
+  const q = query.trim().toLowerCase();
+  if (!q) return tokens;
+
+  return tokens.filter((token) => {
+    if (token.symbol.toLowerCase().includes(q)) return true;
+    if (token.address?.toLowerCase().includes(q)) return true;
+    return false;
+  });
+}
+
 export function TokenSelect({
   selected,
   onSelect,
@@ -15,7 +26,22 @@ export function TokenSelect({
   label,
 }: TokenSelectProps) {
   const [open, setOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const searchRef = useRef<HTMLInputElement>(null);
   const tokens = getTokensForChain(chainId);
+  const filteredTokens = useMemo(
+    () => filterTokens(tokens, searchQuery),
+    [tokens, searchQuery],
+  );
+
+  useEffect(() => {
+    if (open) {
+      setSearchQuery('');
+      requestAnimationFrame(() => searchRef.current?.focus());
+    }
+  }, [open]);
+
+  const close = () => setOpen(false);
 
   return (
     <>
@@ -36,26 +62,33 @@ export function TokenSelect({
       </button>
 
       {open && (
-        <div className="modal-overlay" onClick={() => setOpen(false)}>
+        <div className="modal-overlay" onClick={close}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
               <span>{label}</span>
-              <button
-                className="modal-close"
-                onClick={() => setOpen(false)}
-                type="button"
-              >
+              <button className="modal-close" onClick={close} type="button">
                 ✕
               </button>
             </div>
+            <div className="token-search-wrap">
+              <input
+                ref={searchRef}
+                type="text"
+                className="token-search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                autoComplete="off"
+                spellCheck={false}
+              />
+            </div>
             <div className="token-list">
-              {tokens.map((token) => (
+              {filteredTokens.map((token) => (
                 <button
                   key={`${token.symbol}-${token.address ?? 'native'}`}
                   className={`token-item ${selected.symbol === token.symbol ? 'active' : ''}`}
                   onClick={() => {
                     onSelect(token);
-                    setOpen(false);
+                    close();
                   }}
                   type="button"
                 >

@@ -137,6 +137,35 @@ body {
   gap: 8px;
 }
 
+.btn-lang {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition:
+    color 0.2s,
+    border-color 0.2s,
+    background 0.2s;
+}
+
+.btn-lang:hover {
+  color: var(--brand);
+  border-color: var(--brand-light);
+  background: var(--brand-soft);
+}
+
+.lang-globe-icon {
+  width: 20px;
+  height: 20px;
+}
+
 .btn-connect,
 .btn-wallet {
   background: linear-gradient(135deg, var(--brand-light) 0%, var(--brand-dark) 100%);
@@ -611,6 +640,28 @@ body {
 
 .modal-close:hover {
   color: var(--brand-dark);
+}
+
+.token-search-wrap {
+  padding: 12px 16px 8px;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.token-search {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border-soft);
+  border-radius: 12px;
+  background: var(--bg-main);
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.token-search:focus {
+  border-color: var(--brand);
 }
 
 .token-list {

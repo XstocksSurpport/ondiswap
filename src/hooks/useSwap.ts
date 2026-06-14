@@ -20,6 +20,7 @@ import {
   getDefaultToToken,
   type Token,
 } from '../config/tokens';
+import type { TranslationKey } from '../i18n/translations';
 
 export function useSwap() {
   const { authenticated, ready } = usePrivyReady();
@@ -37,8 +38,12 @@ export function useSwap() {
   const [toAmount, setToAmount] = useState('');
   const [balance, setBalance] = useState('0');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
+  const [errorKey, setErrorKey] = useState<TranslationKey | null>(null);
+  const [errorRaw, setErrorRaw] = useState<string | null>(null);
+  const [successKey, setSuccessKey] = useState<TranslationKey | null>(null);
+  const [successVars, setSuccessVars] = useState<
+    Record<string, string | number> | undefined
+  >();
 
   const chain =
     SUPPORTED_CHAINS.find((c) => c.id === chainId) ?? SUPPORTED_CHAINS[0];
@@ -125,18 +130,22 @@ export function useSwap() {
 
   const executeSwap = async () => {
     if (!authenticated || !wallet?.address) {
-      setError('Please connect wallet first');
+      setErrorKey('errConnectWallet');
+      setErrorRaw(null);
       return;
     }
 
     if (!fromAmount || parseFloat(fromAmount) <= 0) {
-      setError('Enter a valid amount');
+      setErrorKey('errValidAmount');
+      setErrorRaw(null);
       return;
     }
 
     setLoading(true);
-    setError(null);
-    setSuccess(null);
+    setErrorKey(null);
+    setErrorRaw(null);
+    setSuccessKey(null);
+    setSuccessVars(undefined);
 
     try {
       const provider = await wallet.getEthereumProvider();
@@ -175,16 +184,19 @@ export function useSwap() {
         })) as string;
       }
 
-      setSuccess(`Transaction sent: ${hash.slice(0, 10)}...`);
+      setSuccessKey('successSwap');
+      setSuccessVars({ hash: hash.slice(0, 10) });
       setFromAmount('');
       setToAmount('');
       await fetchBalance();
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Transaction failed';
       if (message.includes('User rejected') || message.includes('denied')) {
-        setError('Transaction cancelled');
+        setErrorKey('errCancelled');
+        setErrorRaw(null);
       } else {
-        setError(message.slice(0, 120));
+        setErrorKey(null);
+        setErrorRaw(message.slice(0, 120));
       }
     } finally {
       setLoading(false);
@@ -210,8 +222,10 @@ export function useSwap() {
     toAmount,
     balance,
     loading,
-    error,
-    success,
+    errorKey,
+    errorRaw,
+    successKey,
+    successVars,
     setFromToken,
     setToToken,
     setFromAmount,

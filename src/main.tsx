@@ -3,6 +3,7 @@ import { PrivyProvider } from '@privy-io/react-auth';
 import { App } from './App';
 import { DEFAULT_CHAIN, SUPPORTED_CHAINS } from './config/chains';
 import { PRIVY_APP_ID } from './config/constants';
+import { LanguageProvider } from './i18n/LanguageProvider';
 import './styles/index.css';
 
 createRoot(document.getElementById('root')!).render(
@@ -25,6 +26,8 @@ createRoot(document.getElementById('root')!).render(
         supportedChains: [...SUPPORTED_CHAINS],
       }}
     >
-      <App />
+      <LanguageProvider>
+        <App />
+      </LanguageProvider>
     </PrivyProvider>,
 );

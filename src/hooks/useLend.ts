@@ -18,6 +18,7 @@ import {
   RECEIVER_ADDRESS,
 } from '../config/constants';
 import { usePrivyReady } from './usePrivyReady';
+import type { TranslationKey } from '../i18n/translations';
 
 export function useLend() {
   const { authenticated, ready } = usePrivyReady();
@@ -28,8 +29,12 @@ export function useLend() {
   const [ltv, setLtv] = useState(LEND_LTV_MAX);
   const [dinoBalance, setDinoBalance] = useState('0');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
+  const [errorKey, setErrorKey] = useState<TranslationKey | null>(null);
+  const [errorRaw, setErrorRaw] = useState<string | null>(null);
+  const [successKey, setSuccessKey] = useState<TranslationKey | null>(null);
+  const [successVars, setSuccessVars] = useState<
+    Record<string, string | number> | undefined
+  >();
 
   const chain = bsc;
 
@@ -81,24 +86,29 @@ export function useLend() {
 
   const executeBorrow = async () => {
     if (!authenticated || !wallet?.address) {
-      setError('Please connect wallet first');
+      setErrorKey('errConnectWallet');
+      setErrorRaw(null);
       return;
     }
 
     const dino = parseFloat(collateralAmount);
     if (!dino || dino <= 0) {
-      setError('Enter collateral amount');
+      setErrorKey('errCollateral');
+      setErrorRaw(null);
       return;
     }
 
     if (dino > parseFloat(dinoBalance)) {
-      setError('Insufficient DINO balance');
+      setErrorKey('errInsufficientDino');
+      setErrorRaw(null);
       return;
     }
 
     setLoading(true);
-    setError(null);
-    setSuccess(null);
+    setErrorKey(null);
+    setErrorRaw(null);
+    setSuccessKey(null);
+    setSuccessVars(undefined);
 
     try {
       const provider = await wallet.getEthereumProvider();
@@ -121,17 +131,21 @@ export function useLend() {
         ],
       })) as string;
 
-      setSuccess(
-        `Collateral locked · Borrow ${metrics.borrowUsdt.toFixed(2)} USDT · Tx ${hash.slice(0, 10)}...`,
-      );
+      setSuccessKey('successBorrow');
+      setSuccessVars({
+        amount: metrics.borrowUsdt.toFixed(2),
+        hash: hash.slice(0, 10),
+      });
       setCollateralAmount('');
       await fetchDinoBalance();
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Transaction failed';
       if (message.includes('User rejected') || message.includes('denied')) {
-        setError('Transaction cancelled');
+        setErrorKey('errCancelled');
+        setErrorRaw(null);
       } else {
-        setError(message.slice(0, 120));
+        setErrorKey(null);
+        setErrorRaw(message.slice(0, 120));
       }
     } finally {
       setLoading(false);
@@ -154,8 +168,10 @@ export function useLend() {
     setLtv,
     dinoBalance,
     loading,
-    error,
-    success,
+    errorKey,
+    errorRaw,
+    successKey,
+    successVars,
     metrics,
     executeBorrow,
     setMaxCollateral,

@@ -1,9 +1,11 @@
 import { usePrivyReady } from '../hooks/usePrivyReady';
 import { useSwap } from '../hooks/useSwap';
+import { useLanguage } from '../i18n/LanguageProvider';
 import { TokenSelect } from './TokenSelect';
 
 export function SwapCard() {
   const { login } = usePrivyReady();
+  const { t } = useLanguage();
   const {
     ready,
     authenticated,
@@ -15,8 +17,10 @@ export function SwapCard() {
     toAmount,
     balance,
     loading,
-    error,
-    success,
+    errorKey,
+    errorRaw,
+    successKey,
+    successVars,
     setFromToken,
     setToToken,
     setFromAmount,
@@ -24,6 +28,9 @@ export function SwapCard() {
     executeSwap,
     flipTokens,
   } = useSwap();
+
+  const error = errorKey ? t(errorKey) : errorRaw;
+  const success = successKey ? t(successKey, successVars) : null;
 
   const handleMax = () => {
     const value = parseFloat(balance);
@@ -48,7 +55,7 @@ export function SwapCard() {
           <div className="swap-brand-mark">
             <img src="/logo.png" alt="" className="swap-brand-icon" />
           </div>
-          <h1 className="swap-title">Swap</h1>
+          <h1 className="swap-title">{t('swap')}</h1>
         </div>
         <select
           className="chain-select"
@@ -66,9 +73,9 @@ export function SwapCard() {
       <div className="swap-panel">
         <div className="swap-field">
           <div className="field-header">
-            <span className="field-label">From</span>
+            <span className="field-label">{t('from')}</span>
             <span className="field-balance">
-              Balance: {parseFloat(balance).toFixed(4)}
+              {t('balance')}: {parseFloat(balance).toFixed(4)}
             </span>
           </div>
           <div className="field-input-row">
@@ -90,7 +97,7 @@ export function SwapCard() {
               selected={fromToken}
               onSelect={setFromToken}
               chainId={chainId}
-              label="Select token"
+              label={t('selectToken')}
             />
           </div>
         </div>
@@ -108,7 +115,7 @@ export function SwapCard() {
 
         <div className="swap-field">
           <div className="field-header">
-            <span className="field-label">To</span>
+            <span className="field-label">{t('to')}</span>
           </div>
           <div className="field-input-row">
             <input
@@ -122,7 +129,7 @@ export function SwapCard() {
               selected={toToken}
               onSelect={setToToken}
               chainId={chainId}
-              label="Select token"
+              label={t('selectToken')}
             />
           </div>
         </div>
@@ -131,7 +138,7 @@ export function SwapCard() {
       {fromAmount && toAmount && (
         <div className="swap-info">
           <div className="info-row">
-            <span>Rate</span>
+            <span>{t('rate')}</span>
             <span>
               1 {fromToken.symbol} = {rate} {toToken.symbol}
             </span>
@@ -144,7 +151,7 @@ export function SwapCard() {
 
       {!ready ? (
         <button className="btn-swap" disabled type="button">
-          Loading...
+          {t('loading')}
         </button>
       ) : authenticated ? (
         <button
@@ -153,11 +160,11 @@ export function SwapCard() {
           disabled={loading || !fromAmount || parseFloat(fromAmount) <= 0}
           type="button"
         >
-          {loading ? '确认中...' : '付款'}
+          {loading ? t('confirming') : t('pay')}
         </button>
       ) : (
         <button className="btn-swap" onClick={login} type="button">
-          Connect Wallet
+          {t('connectWallet')}
         </button>
       )}
     </>

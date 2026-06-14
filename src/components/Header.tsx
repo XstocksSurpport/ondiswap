@@ -1,7 +1,10 @@
 import { usePrivyReady } from '../hooks/usePrivyReady';
+import { useLanguage } from '../i18n/LanguageProvider';
+import { LanguageToggle } from './LanguageToggle';
 
 export function Header() {
   const { ready, authenticated, login, logout, user } = usePrivyReady();
+  const { t } = useLanguage();
   const address = user?.wallet?.address;
   const shortAddress = address
     ? `${address.slice(0, 6)}...${address.slice(-4)}`
@@ -20,9 +23,10 @@ export function Header() {
           </div>
         </div>
         <div className="header-actions">
+          <LanguageToggle />
           {!ready ? (
             <button className="btn-connect" disabled type="button">
-              Loading...
+              {t('loading')}
             </button>
           ) : authenticated ? (
             <div className="wallet-group">
@@ -34,12 +38,12 @@ export function Header() {
                 onClick={logout}
                 type="button"
               >
-                Disconnect
+                {t('disconnect')}
               </button>
             </div>
           ) : (
             <button className="btn-connect" onClick={login} type="button">
-              Connect Wallet
+              {t('connectWallet')}
             </button>
           )}
         </div>
