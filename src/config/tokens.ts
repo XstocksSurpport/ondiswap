@@ -21,8 +21,8 @@ export const BNB_TOKEN: Token = {
 };
 
 export const DINO_TOKEN: Token = {
-  symbol: 'DINO',
-  name: 'DINO',
+  symbol: 'FOSSIL',
+  name: 'FOSSIL',
   address: DINO_TOKEN_ADDRESS,
   decimals: 18,
   logoURI: '/tokens/dino.png',

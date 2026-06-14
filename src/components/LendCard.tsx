@@ -71,7 +71,7 @@ export function LendCard() {
           />
           <div className="token-btn token-btn-static">
             <TokenIcon token={DINO_TOKEN} size={24} />
-            <span className="token-symbol">DINO</span>
+            <span className="token-symbol">{DINO_TOKEN.symbol}</span>
           </div>
         </div>
       </div>
