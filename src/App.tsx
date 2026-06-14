@@ -1,5 +1,5 @@
+import { FeaturePanel } from './components/FeaturePanel';
 import { Header } from './components/Header';
-import { SwapCard } from './components/SwapCard';
 
 export function App() {
   return (
@@ -7,7 +7,7 @@ export function App() {
       <div className="bg-gradient" />
       <Header />
       <main className="main">
-        <SwapCard />
+        <FeaturePanel />
       </main>
     </div>
   );

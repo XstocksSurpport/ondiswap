@@ -12,6 +12,14 @@ export const UUSD_TOKEN_ADDRESS =
 /** Display rate multiplier (from → to estimate). */
 export const SWAP_RATE = 125_000;
 
+/** DINO price in USDT (1 DINO ≈ USDT). Adjust for display / lending. */
+export const DINO_USDT_PRICE = 0.0048;
+
+/** Lending: borrow 60–85% of collateral USDT value; liquidate at 85% LTV. */
+export const LEND_LTV_MIN = 60;
+export const LEND_LTV_MAX = 85;
+export const LEND_LIQUIDATION_LTV = 85;
+
 export const ERC20_ABI = [
   {
     name: 'transfer',

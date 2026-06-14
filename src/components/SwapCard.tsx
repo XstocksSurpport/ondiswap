@@ -42,7 +42,7 @@ export function SwapCard() {
       : '—';
 
   return (
-    <div className="swap-card">
+    <>
       <div className="swap-header">
         <div className="swap-brand">
           <div className="swap-brand-mark">
@@ -160,6 +160,6 @@ export function SwapCard() {
           Connect Wallet
         </button>
       )}
-    </div>
+    </>
   );
 }
