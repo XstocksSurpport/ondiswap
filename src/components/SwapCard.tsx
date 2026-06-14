@@ -44,7 +44,12 @@ export function SwapCard() {
   return (
     <div className="swap-card">
       <div className="swap-header">
-        <h1 className="swap-title">ONDI SWAP</h1>
+        <div className="swap-brand">
+          <div className="swap-brand-mark">
+            <img src="/logo.png" alt="" className="swap-brand-icon" />
+          </div>
+          <h1 className="swap-title">Swap</h1>
+        </div>
         <select
           className="chain-select"
           value={chainId}

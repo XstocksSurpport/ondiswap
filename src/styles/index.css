@@ -7,20 +7,32 @@
 }
 
 :root {
-  --bg-primary: #08060b;
-  --bg-card: #1a1625;
-  --bg-input: #272033;
-  --border: #383241;
-  --text-primary: #f4eeff;
-  --text-secondary: #9b92af;
-  --accent: #ffb237;
-  --accent-hover: #ffc857;
-  --accent-dark: #d4920a;
-  --success: #31d0aa;
-  --error: #ed4b9e;
-  --gradient-1: #1a0a2e;
-  --gradient-2: #16213e;
-  --gradient-3: #0f3460;
+  --brand: #16b4a1;
+  --brand-light: #22c9b5;
+  --brand-dark: #0f9686;
+  --brand-muted: rgba(22, 180, 161, 0.12);
+  --brand-soft: rgba(22, 180, 161, 0.06);
+
+  --bg-primary: #eef8f5;
+  --bg-card: #ffffff;
+  --bg-input: #f3fbf8;
+  --bg-elevated: #ffffff;
+  --border: rgba(22, 180, 161, 0.16);
+  --border-soft: rgba(22, 180, 161, 0.1);
+
+  --text-primary: #12352f;
+  --text-secondary: #5b7d76;
+  --text-muted: #8aa39d;
+
+  --accent: var(--brand);
+  --accent-hover: var(--brand-light);
+  --accent-dark: var(--brand-dark);
+  --success: #16b4a1;
+  --error: #e5486d;
+
+  --shadow-sm: 0 1px 2px rgba(18, 53, 47, 0.04);
+  --shadow-md: 0 8px 24px rgba(18, 53, 47, 0.08);
+  --shadow-brand: 0 8px 24px rgba(22, 180, 161, 0.18);
 }
 
 html,
@@ -46,9 +58,10 @@ body {
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(255, 178, 55, 0.12), transparent),
-    radial-gradient(ellipse 60% 40% at 80% 80%, rgba(120, 60, 200, 0.08), transparent),
-    linear-gradient(180deg, var(--gradient-1) 0%, var(--bg-primary) 50%);
+    radial-gradient(ellipse 70% 45% at 50% -10%, rgba(22, 180, 161, 0.14), transparent),
+    radial-gradient(ellipse 50% 35% at 100% 0%, rgba(34, 201, 181, 0.1), transparent),
+    radial-gradient(ellipse 40% 30% at 0% 100%, rgba(22, 180, 161, 0.08), transparent),
+    linear-gradient(180deg, #f7fdfb 0%, var(--bg-primary) 55%);
   pointer-events: none;
   z-index: 0;
 }
@@ -70,24 +83,52 @@ body {
 .logo {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
+  padding: 6px 16px 6px 6px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: 999px;
+  box-shadow: var(--shadow-sm);
+}
+
+.logo-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  background: linear-gradient(145deg, #ffffff 0%, #edf9f6 100%);
+  border: 1px solid var(--border-soft);
 }
 
 .logo-icon {
-  width: 36px;
-  height: 36px;
+  width: 26px;
+  height: 26px;
   object-fit: contain;
   display: block;
 }
 
+.logo-copy {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+  gap: 2px;
+}
+
 .logo-text {
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 700;
-  letter-spacing: 1px;
-  background: linear-gradient(135deg, var(--accent) 0%, #fff 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  letter-spacing: 0.6px;
+  color: var(--text-primary);
+}
+
+.logo-sub {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--brand);
+  text-transform: uppercase;
 }
 
 .header-actions {
@@ -98,8 +139,8 @@ body {
 
 .btn-connect,
 .btn-wallet {
-  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
-  color: #1a1625;
+  background: linear-gradient(135deg, var(--brand-light) 0%, var(--brand-dark) 100%);
+  color: #ffffff;
   border: none;
   border-radius: 16px;
   padding: 10px 20px;
@@ -108,12 +149,13 @@ body {
   font-weight: 600;
   cursor: pointer;
   transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: var(--shadow-sm);
 }
 
 .btn-connect:hover:not(:disabled),
 .btn-wallet:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 20px rgba(255, 178, 55, 0.35);
+  box-shadow: var(--shadow-brand);
 }
 
 .btn-connect:disabled {
@@ -128,7 +170,7 @@ body {
 }
 
 .btn-disconnect {
-  background: transparent;
+  background: var(--bg-card);
   border: 1px solid var(--border);
   color: var(--text-secondary);
   border-radius: 16px;
@@ -136,12 +178,13 @@ body {
   font-family: inherit;
   font-size: 14px;
   cursor: pointer;
-  transition: border-color 0.15s, color 0.15s;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
 }
 
 .btn-disconnect:hover {
-  border-color: var(--accent);
-  color: var(--text-primary);
+  border-color: var(--brand);
+  color: var(--brand-dark);
+  background: var(--brand-soft);
 }
 
 .main {
@@ -157,12 +200,10 @@ body {
   width: 100%;
   max-width: 440px;
   background: var(--bg-card);
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-soft);
   border-radius: 24px;
   padding: 24px;
-  box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.4),
-    0 0 0 1px rgba(255, 178, 55, 0.05);
+  box-shadow: var(--shadow-md);
 }
 
 .swap-header {
@@ -172,10 +213,34 @@ body {
   margin-bottom: 20px;
 }
 
+.swap-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.swap-brand-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #ffffff 0%, #edf9f6 100%);
+  border: 1px solid var(--border-soft);
+}
+
+.swap-brand-icon {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
 .swap-title {
   font-size: 20px;
   font-weight: 700;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.3px;
+  color: var(--text-primary);
 }
 
 .chain-select {
@@ -191,7 +256,8 @@ body {
 }
 
 .chain-select:focus {
-  border-color: var(--accent);
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px var(--brand-muted);
 }
 
 .swap-panel {
@@ -203,6 +269,7 @@ body {
 
 .swap-field {
   background: var(--bg-input);
+  border: 1px solid var(--border-soft);
   border-radius: 16px;
   padding: 16px;
   position: relative;
@@ -222,7 +289,7 @@ body {
 
 .field-balance {
   font-size: 12px;
-  color: var(--text-secondary);
+  color: var(--text-muted);
 }
 
 .field-input-row {
@@ -244,8 +311,8 @@ body {
 }
 
 .amount-input::placeholder {
-  color: var(--text-secondary);
-  opacity: 0.5;
+  color: var(--text-muted);
+  opacity: 0.7;
 }
 
 .amount-input::-webkit-outer-spin-button,
@@ -258,9 +325,9 @@ body {
   position: absolute;
   bottom: 16px;
   right: 16px;
-  background: rgba(255, 178, 55, 0.15);
+  background: var(--brand-muted);
   border: none;
-  color: var(--accent);
+  color: var(--brand-dark);
   border-radius: 8px;
   padding: 4px 10px;
   font-family: inherit;
@@ -271,7 +338,7 @@ body {
 }
 
 .btn-max:hover {
-  background: rgba(255, 178, 55, 0.25);
+  background: rgba(22, 180, 161, 0.2);
 }
 
 .token-btn {
@@ -288,11 +355,12 @@ body {
   font-weight: 600;
   cursor: pointer;
   white-space: nowrap;
-  transition: border-color 0.15s;
+  transition: border-color 0.15s, box-shadow 0.15s;
 }
 
 .token-btn:hover {
-  border-color: var(--accent);
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px var(--brand-soft);
 }
 
 .token-symbol {
@@ -311,23 +379,25 @@ body {
   background: var(--bg-card);
   border: 4px solid var(--bg-card);
   box-shadow: 0 0 0 1px var(--border);
-  color: var(--accent);
+  color: var(--brand);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: transform 0.2s, background 0.15s;
+  transition: transform 0.2s, background 0.15s, color 0.15s;
 }
 
 .swap-flip:hover {
-  background: var(--bg-input);
+  background: var(--brand-soft);
+  color: var(--brand-dark);
   transform: translate(-50%, -50%) rotate(180deg);
 }
 
 .swap-info {
   margin-top: 16px;
   padding: 12px 16px;
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--brand-soft);
+  border: 1px solid var(--border-soft);
   border-radius: 12px;
 }
 
@@ -347,22 +417,22 @@ body {
 }
 
 .msg-error {
-  background: rgba(237, 75, 158, 0.12);
+  background: rgba(229, 72, 109, 0.08);
   color: var(--error);
-  border: 1px solid rgba(237, 75, 158, 0.25);
+  border: 1px solid rgba(229, 72, 109, 0.2);
 }
 
 .msg-success {
-  background: rgba(49, 208, 170, 0.12);
-  color: var(--success);
-  border: 1px solid rgba(49, 208, 170, 0.25);
+  background: var(--brand-muted);
+  color: var(--brand-dark);
+  border: 1px solid var(--border);
 }
 
 .btn-swap {
   width: 100%;
   margin-top: 16px;
-  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
-  color: #1a1625;
+  background: linear-gradient(135deg, var(--brand-light) 0%, var(--brand-dark) 100%);
+  color: #ffffff;
   border: none;
   border-radius: 16px;
   padding: 16px;
@@ -371,11 +441,12 @@ body {
   font-weight: 700;
   cursor: pointer;
   transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+  box-shadow: var(--shadow-sm);
 }
 
 .btn-swap:hover:not(:disabled) {
   transform: translateY(-1px);
-  box-shadow: 0 6px 24px rgba(255, 178, 55, 0.4);
+  box-shadow: var(--shadow-brand);
 }
 
 .btn-swap:disabled {
@@ -387,7 +458,8 @@ body {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(18, 53, 47, 0.35);
+  backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -397,7 +469,7 @@ body {
 
 .modal {
   background: var(--bg-card);
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-soft);
   border-radius: 20px;
   width: 100%;
   max-width: 360px;
@@ -405,6 +477,7 @@ body {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  box-shadow: var(--shadow-md);
 }
 
 .modal-header {
@@ -412,21 +485,22 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 16px 20px;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--border-soft);
   font-weight: 600;
+  color: var(--text-primary);
 }
 
 .modal-close {
   background: none;
   border: none;
-  color: var(--text-secondary);
+  color: var(--text-muted);
   font-size: 18px;
   cursor: pointer;
   padding: 4px;
 }
 
 .modal-close:hover {
-  color: var(--text-primary);
+  color: var(--brand-dark);
 }
 
 .token-list {
@@ -452,7 +526,11 @@ body {
 
 .token-item:hover,
 .token-item.active {
-  background: var(--bg-input);
+  background: var(--brand-soft);
+}
+
+.token-item.active {
+  box-shadow: inset 0 0 0 1px var(--border);
 }
 
 .token-item-symbol {
@@ -472,7 +550,7 @@ body {
   }
 
   .logo-text {
-    font-size: 18px;
+    font-size: 16px;
   }
 
   .btn-connect,

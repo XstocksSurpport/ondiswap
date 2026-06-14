@@ -12,8 +12,8 @@ createRoot(document.getElementById('root')!).render(
       appId={PRIVY_APP_ID}
       config={{
         appearance: {
-          theme: 'dark',
-          accentColor: '#FFB237',
+          theme: 'light',
+          accentColor: '#16B4A1',
           logo: '/logo.png',
         },
         loginMethods: ['wallet'],

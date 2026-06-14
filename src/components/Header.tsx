@@ -11,8 +11,13 @@ export function Header() {
     <header className="header">
       <div className="header-inner">
         <div className="logo">
-          <img className="logo-icon" src="/logo.png" alt="ONDI SWAP" />
-          <span className="logo-text">ONDI SWAP</span>
+          <div className="logo-mark" aria-hidden="true">
+            <img className="logo-icon" src="/logo.png" alt="" />
+          </div>
+          <div className="logo-copy">
+            <span className="logo-text">ONDI</span>
+            <span className="logo-sub">SWAP</span>
+          </div>
         </div>
         <div className="header-actions">
           {!ready ? (
