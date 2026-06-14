@@ -7,7 +7,6 @@ export function SwapCard() {
   const { login } = usePrivyReady();
   const { t } = useLanguage();
   const {
-    ready,
     authenticated,
     chainId,
     chains,
@@ -149,11 +148,7 @@ export function SwapCard() {
       {error && <div className="msg msg-error">{error}</div>}
       {success && <div className="msg msg-success">{success}</div>}
 
-      {!ready ? (
-        <button className="btn-swap" disabled type="button">
-          {t('loading')}
-        </button>
-      ) : authenticated ? (
+      {authenticated ? (
         <button
           className="btn-swap"
           onClick={() => void executeSwap()}

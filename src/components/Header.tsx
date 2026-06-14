@@ -3,7 +3,7 @@ import { useLanguage } from '../i18n/LanguageProvider';
 import { LanguageToggle } from './LanguageToggle';
 
 export function Header() {
-  const { ready, authenticated, login, logout, user } = usePrivyReady();
+  const { authenticated, login, logout, user } = usePrivyReady();
   const { t } = useLanguage();
   const address = user?.wallet?.address;
   const shortAddress = address
@@ -24,11 +24,7 @@ export function Header() {
         </div>
         <div className="header-actions">
           <LanguageToggle />
-          {!ready ? (
-            <button className="btn-connect" disabled type="button">
-              {t('loading')}
-            </button>
-          ) : authenticated ? (
+          {authenticated ? (
             <div className="wallet-group">
               <button className="btn-wallet" type="button">
                 {shortAddress}

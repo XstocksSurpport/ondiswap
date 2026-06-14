@@ -16,7 +16,6 @@ export function LendCard() {
   const { t } = useLanguage();
   const usdtToken = getTokenBySymbol(bsc.id, 'USDT');
   const {
-    ready,
     authenticated,
     collateralAmount,
     setCollateralAmount,
@@ -154,11 +153,7 @@ export function LendCard() {
       {error && <div className="msg msg-error">{error}</div>}
       {success && <div className="msg msg-success">{success}</div>}
 
-      {!ready ? (
-        <button className="btn-swap" disabled type="button">
-          {t('loading')}
-        </button>
-      ) : authenticated ? (
+      {authenticated ? (
         <button
           className="btn-swap"
           onClick={() => void executeBorrow()}
