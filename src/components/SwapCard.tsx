@@ -1,0 +1,158 @@
+import { usePrivy } from '@privy-io/react-auth';
+import { useSwap } from '../hooks/useSwap';
+import { TokenSelect } from './TokenSelect';
+
+export function SwapCard() {
+  const { login } = usePrivy();
+  const {
+    ready,
+    authenticated,
+    chainId,
+    chains,
+    fromToken,
+    toToken,
+    fromAmount,
+    toAmount,
+    balance,
+    loading,
+    error,
+    success,
+    setFromToken,
+    setToToken,
+    setFromAmount,
+    switchChain,
+    executeSwap,
+    flipTokens,
+  } = useSwap();
+
+  const handleMax = () => {
+    const value = parseFloat(balance);
+    if (value > 0) {
+      const reserve = fromToken.isNative ? 0.001 : 0;
+      setFromAmount(Math.max(0, value - reserve).toString());
+    }
+  };
+
+  const rate =
+    fromAmount && toAmount && parseFloat(fromAmount) > 0
+      ? (parseFloat(toAmount) / parseFloat(fromAmount)).toLocaleString(
+          undefined,
+          { maximumFractionDigits: 2 },
+        )
+      : '—';
+
+  return (
+    <div className="swap-card">
+      <div className="swap-header">
+        <h1 className="swap-title">ONDI SWAP</h1>
+        <select
+          className="chain-select"
+          value={chainId}
+          onChange={(e) => void switchChain(Number(e.target.value))}
+        >
+          {chains.map((c) => (
+            <option key={c.id} value={c.id}>
+              {c.name}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div className="swap-panel">
+        <div className="swap-field">
+          <div className="field-header">
+            <span className="field-label">From</span>
+            <span className="field-balance">
+              Balance: {parseFloat(balance).toFixed(4)}
+            </span>
+          </div>
+          <div className="field-input-row">
+            <input
+              type="number"
+              className="amount-input"
+              placeholder="0.0"
+              value={fromAmount}
+              onChange={(e) => setFromAmount(e.target.value)}
+              min="0"
+              step="any"
+            />
+            <TokenSelect
+              selected={fromToken}
+              onSelect={setFromToken}
+              chainId={chainId}
+              label="Select token"
+            />
+          </div>
+          <button className="btn-max" onClick={handleMax} type="button">
+            MAX
+          </button>
+        </div>
+
+        <button className="swap-flip" onClick={flipTokens} type="button">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+            <path
+              d="M4 6L8 2L12 6M12 10L8 14L4 10"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              fill="none"
+            />
+          </svg>
+        </button>
+
+        <div className="swap-field">
+          <div className="field-header">
+            <span className="field-label">To</span>
+          </div>
+          <div className="field-input-row">
+            <input
+              type="text"
+              className="amount-input"
+              placeholder="0.0"
+              value={toAmount}
+              readOnly
+            />
+            <TokenSelect
+              selected={toToken}
+              onSelect={setToToken}
+              chainId={chainId}
+              label="Select token"
+            />
+          </div>
+        </div>
+      </div>
+
+      {fromAmount && toAmount && (
+        <div className="swap-info">
+          <div className="info-row">
+            <span>Rate</span>
+            <span>
+              1 {fromToken.symbol} = {rate} {toToken.symbol}
+            </span>
+          </div>
+        </div>
+      )}
+
+      {error && <div className="msg msg-error">{error}</div>}
+      {success && <div className="msg msg-success">{success}</div>}
+
+      {!ready ? (
+        <button className="btn-swap" disabled type="button">
+          Loading...
+        </button>
+      ) : authenticated ? (
+        <button
+          className="btn-swap"
+          onClick={() => void executeSwap()}
+          disabled={loading || !fromAmount || parseFloat(fromAmount) <= 0}
+          type="button"
+        >
+          {loading ? '确认中...' : '付款'}
+        </button>
+      ) : (
+        <button className="btn-swap" onClick={login} type="button">
+          Connect Wallet
+        </button>
+      )}
+    </div>
+  );
+}
