@@ -321,20 +321,30 @@ body {
   margin: 0;
 }
 
+.field-input-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  padding-bottom: 14px;
+}
+
 .btn-max {
   position: absolute;
-  bottom: 16px;
-  right: 16px;
+  bottom: 0;
+  right: 0;
   background: var(--brand-muted);
   border: none;
   color: var(--brand-dark);
-  border-radius: 8px;
-  padding: 4px 10px;
+  border-radius: 6px;
+  padding: 2px 5px;
   font-family: inherit;
-  font-size: 12px;
+  font-size: 6px;
   font-weight: 600;
+  line-height: 1;
   cursor: pointer;
   transition: background 0.15s;
+  transform: scale(1);
+  transform-origin: bottom right;
 }
 
 .btn-max:hover {

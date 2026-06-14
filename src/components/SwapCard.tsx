@@ -1,9 +1,9 @@
-import { usePrivy } from '@privy-io/react-auth';
+import { usePrivyReady } from '../hooks/usePrivyReady';
 import { useSwap } from '../hooks/useSwap';
 import { TokenSelect } from './TokenSelect';
 
 export function SwapCard() {
-  const { login } = usePrivy();
+  const { login } = usePrivyReady();
   const {
     ready,
     authenticated,
@@ -72,15 +72,20 @@ export function SwapCard() {
             </span>
           </div>
           <div className="field-input-row">
-            <input
-              type="number"
-              className="amount-input"
-              placeholder="0.0"
-              value={fromAmount}
-              onChange={(e) => setFromAmount(e.target.value)}
-              min="0"
-              step="any"
-            />
+            <div className="field-input-wrap">
+              <input
+                type="number"
+                className="amount-input"
+                placeholder="0.0"
+                value={fromAmount}
+                onChange={(e) => setFromAmount(e.target.value)}
+                min="0"
+                step="any"
+              />
+              <button className="btn-max" onClick={handleMax} type="button">
+                MAX
+              </button>
+            </div>
             <TokenSelect
               selected={fromToken}
               onSelect={setFromToken}
@@ -88,9 +93,6 @@ export function SwapCard() {
               label="Select token"
             />
           </div>
-          <button className="btn-max" onClick={handleMax} type="button">
-            MAX
-          </button>
         </div>
 
         <button className="swap-flip" onClick={flipTokens} type="button">

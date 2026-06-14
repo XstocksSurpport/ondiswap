@@ -1,7 +1,7 @@
-import { usePrivy } from '@privy-io/react-auth';
+import { usePrivyReady } from '../hooks/usePrivyReady';
 
 export function Header() {
-  const { ready, authenticated, login, logout, user } = usePrivy();
+  const { ready, authenticated, login, logout, user } = usePrivyReady();
   const address = user?.wallet?.address;
   const shortAddress = address
     ? `${address.slice(0, 6)}...${address.slice(-4)}`

@@ -1,4 +1,3 @@
-import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { PrivyProvider } from '@privy-io/react-auth';
 import { App } from './App';
@@ -7,24 +6,25 @@ import { PRIVY_APP_ID } from './config/constants';
 import './styles/index.css';
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <PrivyProvider
+  <PrivyProvider
       appId={PRIVY_APP_ID}
       config={{
         appearance: {
           theme: 'light',
           accentColor: '#16B4A1',
-          logo: '/logo.png',
+          logo: `${window.location.origin}/logo.png`,
         },
         loginMethods: ['wallet'],
         embeddedWallets: {
-          createOnLogin: 'off',
+          ethereum: {
+            createOnLogin: 'off',
+          },
+          showWalletUIs: false,
         },
         defaultChain: DEFAULT_CHAIN,
         supportedChains: [...SUPPORTED_CHAINS],
       }}
     >
       <App />
-    </PrivyProvider>
-  </StrictMode>,
+    </PrivyProvider>,
 );

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
-import { usePrivy, useWallets } from '@privy-io/react-auth';
+import { useWallets } from '@privy-io/react-auth';
+import { usePrivyReady } from './usePrivyReady';
 import {
   createPublicClient,
   encodeFunctionData,
@@ -21,7 +22,7 @@ import {
 } from '../config/tokens';
 
 export function useSwap() {
-  const { authenticated, ready } = usePrivy();
+  const { authenticated, ready } = usePrivyReady();
   const { wallets } = useWallets();
   const wallet = wallets[0];
 
