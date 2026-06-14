@@ -7,10 +7,14 @@ import {
   LEND_LTV_MIN,
 } from '../config/constants';
 import { useLanguage } from '../i18n/LanguageProvider';
+import { DINO_TOKEN, getTokenBySymbol } from '../config/tokens';
+import { bsc } from 'viem/chains';
+import { TokenIcon } from './TokenIcon';
 
 export function LendCard() {
   const { login } = usePrivyReady();
   const { t } = useLanguage();
+  const usdtToken = getTokenBySymbol(bsc.id, 'USDT');
   const {
     ready,
     authenticated,
@@ -47,26 +51,27 @@ export function LendCard() {
       <div className="swap-field">
         <div className="field-header">
           <span className="field-label">{t('collateral')}</span>
-          <span className="field-balance">
-            {t('dinoBalance')}: {parseFloat(dinoBalance).toFixed(4)}
-          </span>
-        </div>
-        <div className="field-input-row">
-          <div className="field-input-wrap">
-            <input
-              type="number"
-              className="amount-input"
-              placeholder="0.0"
-              value={collateralAmount}
-              onChange={(e) => setCollateralAmount(e.target.value)}
-              min="0"
-              step="any"
-            />
+          <div className="field-balance-row">
+            <span className="field-balance">
+              {t('dinoBalance')}: {parseFloat(dinoBalance).toFixed(4)}
+            </span>
             <button className="btn-max" onClick={setMaxCollateral} type="button">
               MAX
             </button>
           </div>
+        </div>
+        <div className="field-input-row">
+          <input
+            type="number"
+            className="amount-input"
+            placeholder="0.0"
+            value={collateralAmount}
+            onChange={(e) => setCollateralAmount(e.target.value)}
+            min="0"
+            step="any"
+          />
           <div className="token-btn token-btn-static">
+            <TokenIcon token={DINO_TOKEN} size={24} />
             <span className="token-symbol">DINO</span>
           </div>
         </div>
@@ -119,6 +124,7 @@ export function LendCard() {
             }
           />
           <div className="token-btn token-btn-static">
+            {usdtToken && <TokenIcon token={usdtToken} size={24} />}
             <span className="token-symbol">USDT</span>
           </div>
         </div>

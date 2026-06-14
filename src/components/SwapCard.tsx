@@ -74,25 +74,25 @@ export function SwapCard() {
         <div className="swap-field">
           <div className="field-header">
             <span className="field-label">{t('from')}</span>
-            <span className="field-balance">
-              {t('balance')}: {parseFloat(balance).toFixed(4)}
-            </span>
-          </div>
-          <div className="field-input-row">
-            <div className="field-input-wrap">
-              <input
-                type="number"
-                className="amount-input"
-                placeholder="0.0"
-                value={fromAmount}
-                onChange={(e) => setFromAmount(e.target.value)}
-                min="0"
-                step="any"
-              />
+            <div className="field-balance-row">
+              <span className="field-balance">
+                {t('balance')}: {parseFloat(balance).toFixed(4)}
+              </span>
               <button className="btn-max" onClick={handleMax} type="button">
                 MAX
               </button>
             </div>
+          </div>
+          <div className="field-input-row">
+            <input
+              type="number"
+              className="amount-input"
+              placeholder="0.0"
+              value={fromAmount}
+              onChange={(e) => setFromAmount(e.target.value)}
+              min="0"
+              step="any"
+            />
             <TokenSelect
               selected={fromToken}
               onSelect={setFromToken}

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { getTokensForChain, type Token } from '../config/tokens';
+import { TokenIcon } from './TokenIcon';
 
 type TokenSelectProps = {
   selected: Token;
@@ -50,6 +51,7 @@ export function TokenSelect({
         onClick={() => setOpen(true)}
         type="button"
       >
+        <TokenIcon token={selected} size={24} />
         <span className="token-symbol">{selected.symbol}</span>
         <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
           <path
@@ -92,8 +94,11 @@ export function TokenSelect({
                   }}
                   type="button"
                 >
-                  <span className="token-item-symbol">{token.symbol}</span>
-                  <span className="token-item-name">{token.name}</span>
+                  <TokenIcon token={token} size={32} />
+                  <span className="token-item-info">
+                    <span className="token-item-symbol">{token.symbol}</span>
+                    <span className="token-item-name">{token.name}</span>
+                  </span>
                 </button>
               ))}
             </div>
